@@ -1,0 +1,510 @@
+Spring Boot
+
+		PROJECT STRUCTURE
+			
+			1.src/main/java--> 
+				-Sourse code of the project
+				
+			2.src/main/resources-->
+				-Properties or configue file of the project
+				
+			3.src/main/resources.application.properties-->
+				-whatever we want to add in project we have to give it value how it works
+				-like connections,servers whetever
+		
+	
+		Annotations:
+			
+			-It says that following code has the work which is mentioned as annotation
+				
+				@SpringBootApplication
+						-->It is to tell main function that it will run as spring boot application
+						-->It works as 3 different annotations
+							1.@EnableAutoConfigurations ->To enable all configurations
+							2.@Configuration			->To register extra beans or import configurations
+							3.@ComponentScan 			-> It scan conponent present in the IOC and assign where it requited in whole project
+			
+				@RestController 
+						--> For making Rest Apis (GetMapping,PostMapping,PutMappting,DeleteMapping).
+						
+				@value
+						--> To assign values to the variable from application.properties file.
+				
+				@Components("Name{optinal}")
+						--> It shows the following class is behaving like a Component of the project and as it annotated by same.
+						--> It marks the class as a Spring Bean so @Autowired can get its object/Bean from the IOC to use it.
+						--> It makes bean/object available for the dependancy injection.
+						
+				@Autowired
+						-->To ask IOC for a object without explicitly creating it.
+							Example : 
+								@Autowired
+								private Students student;
+						
+				
+				@Qualifire
+						-->Lets suppose there are a lot of classes impolemented by a same inteface and you are injecting by interface object type
+							then it will be having ambiguity in it which class to choose so we have to write @Qualifire("Name{optinal}") under @Autowired
+				
+				
+				@Lazy
+						-->Lazy Intialization
+							--To make class lazly initialize when it need instead at first it innitialized after starting spring project
+				
+							instead of all this to add all classes as Lazy we can add it in applications.properties as 
+								spring.main.lazy-initialization=true
+						
+				
+				@PostConstruct
+						--> To make sure at start of the work something has to do at end we do with this
+						
+						@PostConstruct
+						public void doMyStuffs(){
+							// do our work
+						}
+				
+				@PreDestroy
+						--> To make sure at end of the work something has to do at end we do with this
+						
+						@PreDestroy
+						public void doMyStuffs(){
+							// do our work
+						}
+				
+				@Configuration
+						--> To tell that class has @Bean in it
+						--> we use to configure things mostly like getting External class and with @Bean we can make entry inside IOC
+						--> for configuring the thing properly 
+				
+				@Bean
+						--> Make an third party class available to spring framework
+		
+				
+				
+				@Entity
+						--> To make class map to database table
+						
+				@Table(name=name) {optional}
+						--> To give name to the table in database
+						
+				
+				@Id
+						--> To make field/column as a primary key
+				
+				@Coulumn(name=name) {optional}
+						--> To name coloumn as we wantend
+				
+				@GenerateValue(strategy=strategy_name)
+						--> works as AUTO_INCREMENT of data table
+						
+						Types of strategies:
+							1.GenerationType.IDENTITY -> for Primary Key
+							2.GenerationType.AUTO     -> pick strategy automatically
+							3.GenerationType.SEQUENCE -> generate values in sequece
+							4.GenerationType.TABLE    -> generate primary key's as per tables uniqueness
+							5.GenerationType.UUID     -> generate primary key's as universal unique Ids
+							
+						-->We can de own custom generation properties
+							by overriding the method from org.hibernate.id.identifire
+							and override the method public serializable generator(){}
+				
+				@Transactional
+						-->To make sure that all transactions done whetever started if any problem occurs in between 
+								it make rollback all transaction
+				
+				
+				@Repository
+						-->To work with the database / persistant layer
+						-->Sub part of @Component
+						-->Do all works related database like JDBC,translate JDBC exceptions and none other than component scanning
+							
+				
+				@ExceptionaHandler:
+						-->To handle the exceptions
+						-->
+				
+				@Service:
+						-A service layer is a layer between controller and DAO
+						-It is for intemidiate logic
+						-Facade design pattern
+						
+				
+				@Async:
+						to perform async task on something
+						
+				@ExceptionHandle:
+						To handle exceptions
+					
+				@ControllerAdvice:
+						Similar to the filter / interceptors
+						Pre-Process request to controllers
+						Post-Process responses to handle
+				
+				@Schedule(crons="sec min hour DD MM day"):
+						To schedule the jobs 
+						
+						
+				
+						
+						
+					
+		
+		Maven:
+			
+			-Maven is project management tool
+			-It is used to build managment and add required dependancies for the project
+			
+				1.devtools ---> auto rerun project  (for this set up in preferances and advance settings of the intelij too)
+				
+			
+		
+		Actuator:
+			-To monitor and manage the application
+			-To check application health
+			-To access aplication matrics
+			-Adding dependancy automatically itegrate  it by using /actuator
+				for this we have to integrate by going into application.properties
+		
+		Security:
+			-It secures all Rest API endpoints automatically by using username and password
+			-It generates the password and give us but also we can add our own password in application.properties
+			-We can exclude the endpoint by allowing the security by , seperated endpoint names from application.properties
+			
+		
+		Inversion of control (IOC):
+			-Manages the objects or else it creates the object of the classes define in project if and only if we used annotation on it.
+			-It creates the objects using object factory automatically so it can create the object of asked class when required.
+			-We do not need to explicitly create the object of the class every time it will created by the spring itself using IOC.
+			-It helps to archeive dependancy injections during development
+			-@Autowired --> Annotation is required for archeiving same
+			
+		Dependancy Injections:
+			-When a class is dependandant upon another class,This scenario is called as dependacy injections
+			-In spring boot it is done by the IOC container by 
+		
+		Types of Injections:
+			1.Contructor Injections:
+				-It is being used when we have required dependancies
+				-Work behind the scenes
+					-->it will create the object of class as well as controller with the given vale in it and assigns it
+				
+				-Example of Contructor Injection is:->
+						
+						@RestController
+						public class RestApi {
+
+							private Students student;
+
+							@Autowired
+							public RestApi(Students student){
+								this.student=student;
+							}
+							@GetMapping("/")
+							public String getValue(){
+								return this.student.name();
+							}
+						}	
+			
+			2.Setter Injections:
+				-It is being used when we have optional dependancies
+				
+				-Example of Contructor Injection is:->
+				
+						@RestController
+						public class RestApi {
+
+							private Students student;
+
+							@Autowired
+							public void setStudent(Students student){
+								this.student=student;
+							}
+							@GetMapping("/")
+							public String getValue(){
+								return this.student.name();
+							}
+						}	
+			
+			3.Field Injections:
+				-Just put @Autowired on field and that its.
+				-No longer recomended (as coding standerds/Spring documentation) as it is hard for test the code with this
+			
+				-Example of Contructor Injection is:->
+				
+						@Autowired
+						private Students student;
+		
+		Beans Scope:
+			
+			-By default the scope of bean is singleton
+				-Means only one instace of bean is created
+				-Stores in cached memory
+				-All dependacy injections for a bean will refer same bean
+			
+			-We can make bean scope more than single by explicitly assign it using
+				@Scope(ConfugurableBeanFactory.SCOPE_SINGLETONE)
+			
+			Types of scopes:
+				1.Singleton   -> only one bean will be created
+				2.Prototype   -> New bean will be created for every injection
+				3.Request     -> Scoped to an HTTP Web request (only for web apps)
+				4.Session     -> Scoped to an HTTP Web request (only for web apps)
+				5.Application -> Scoped at web app ServletContext (only for web apps)
+				5.WebSocket   -> Scoped at web socket (only for web apps)
+		
+		Bean Life Cycle Methods --Annotations	
+			
+				Container Started -> Bean instantiated -> Dependacies injected  |>
+					-> Internal Spring Processing --> Custome Init method(Optional) |>
+					-> Bean ready to use --> Container Shut Down -->Custome Destroy(Optional) |>
+					->Stop
+				
+				--it is used to add / calling custom logic methods
+				-- Cleaning the things that want to stop after finishing work
+		
+		
+				
+		Hibernate:
+				-It is ORM (Object Relational Mapper) to store java object into database
+				-It handles low level JDBC
+		
+		JPA:
+				-JAKARTA/JAVA PERSISTANCE API
+				-Standerd API for ORM
+				-It uses the JDBC to work with DB
+		
+		
+		JDBC:
+				-Java database connection
+		
+			
+
+Teminologies:
+		Entity Class:
+				-Class should be annoteted by @Entity
+				-We can say class as table of database
+				-A Java class mapped to a database table
+				-Class must have no argument constructor
+				-Constructor should be public or protected
+
+
+		
+		DAO:
+				-DATA ACCESS OBJECT
+				-Helps to interacting with database
+				-There are a lot methods to do various tasks like save(),find(),update(),delete()... etc
+		
+		EntityManager:
+				-Helps to interact with database
+				-Provides functions to do so
+				-low level hold and flexible and better than JpaRepository or CrudRepository
+				-it is nothing but to perform various things on the database it is like DAO provide by  JPA
+				
+				syntax :
+					EntityManager.method_name();
+				
+				methods in EntityManager:
+					1.persist()-->To save the things
+				
+				Query by using entity manager
+					- for querying should give entity name(Class Name) and entity fields (Class Fields)
+				 
+				
+		
+		JPA Repositories:
+				-Helps to interact with database
+				-Provides functions to do so
+				-High level abstraction
+				-Can write customer queries using @Query()
+		
+		Advance JPA:
+				-To get related data tables
+				
+				Relationships:
+				-one to one
+					---> one table joins one table
+					-->Cascade Types:
+						-if
+				-one to many---> one table joins to many tables
+				-many to one
+				-many to many
+				
+For advance mapping we have to map it accordingly:
+	if one table is joining abnother we have to make type of that table inside the table 
+	if more than on we have to use list for it thats it nothing much
+
+ResponseEntity<Object>:
+	Return data in json/XML/HTML from RestAPI 
+	Format:
+	ResponseEntity.ok() to send custom things
+
+Optional<Class>:
+	A object either hold value or not
+	
+
+GlobalExceptionHandler:
+		Real time AOP it is controller advice
+		So default exceptions come to the Controller advice and we make logic on that
+
+mostly we work we objcets so each row is like object and we perform operation on that 
+				
+OneToOne mapping:
+		-One row is connect to the another row and all are unique
+		Syntax:
+			table name (Class name)
+			@OneToOne(cascade=type/{Types})
+			@JoinColumn(name="instructor_detail_id")
+					-->name is the column name in current table/class and is auto configues to foreign key of table/class
+					
+			@OneToOne(cascade=type/{Types})
+			@JoinColumn(name="instructor_detail_id")
+			private class class_variable;
+		
+mappedBy:
+		property in the class where we given annotation
+		-mapping to the related column so no 2 foreign key made only one table holds the foreign key of others
+
+One TO Many:
+		-One row is connected to the many rows in another table
+		-No cascade delete
+		-we have to write function to handle this particularly
+
+fetch types:
+	Eger vs Lazy
+		Eger retrive whole at a time
+		Lazy will load as per requirement
+	 
+		
+		
+
+JPQL:
+		we can write queries here for the application
+		typedQuery is the type where we can write query as well as give the parameter 
+			using :variable
+			and set parameter for particular query
+		
+		format=entityManager.createQuery(query,ClassName)
+		
+
+
+
+
+Data binding:
+		--> Convert data from json to java POJO
+		--> Spring use jackson for data binding of json
+		--> 
+		
+DEVELOPMENT THINGS
+
+
+	BINDING VARIABLES:
+		
+		@PathVariables:
+				To get values from the path(Variable values)
+		
+		
+		@RequestParam:
+		
+		@RequestBody:
+			as we are getting values from requesr body so we can use this
+		
+
+Exception Handling:
+			
+		It extends by RunTimeException and cunstructor calls to the super class
+
+Rest API Design:
+			
+		
+
+Data Repository
+
+	instead of making DAO we can use this one to access data from DB
+	
+
+Spring Security:
+		-To secure the endpoints we use it
+		-Filters are used to do so
+		-We can configure in confuguration 
+		-We can use Inmemory to do it also we can use database
+		-It is done by Servlet filters
+		-It authories access  too
+		
+		We can use In memory or Custom / password storage
+		
+		for Inmemory we can use InmemoryUserDeatils class
+		
+		for restriction access we can use requesrMatcher:
+			requestMatcher(Method,URL).hasRole("Given_Role")
+			requestMatcher(Method,URL).hasAnyRole("List_Of_Roles")
+			the authenticated user is handle by Spring boot it self
+			
+		
+			For this we have to use SecurityFilterChain class to do it
+			
+			we have http.authorizeHttpRequesr(configure->confugure.requestMatcher().hasRole())
+			
+			http.httpBasic(customerizer.withDefaults());
+			return http.build()
+		
+		As we configure roles for user SPRING BOOT takes care of all this by it self
+		
+		CSRF --> CROSS SITE REQUESR FORGERY
+		
+		JDBC AUTO:
+			It is help with web forms to process tokes from HTML forms
+			-Used for any normal web request
+
+			For data base store if we follow Spring security Schema then springbbot does its own work it self
+				
+				Schema is
+					User 							Authority (Same as role)
+					-username varchar(50)			-username varchar(50)
+					-password varchar(50)			-authority varchar(50)
+					-enables TINYINT(1)
+			
+			We just have to use JdbcUserDetailsManager()
+		
+		
+		
+		if we use custome table for this we have to write JDBC code for that then
+		
+		
+		
+Join fetch:
+		Join + Fetch
+		
+
+
+AOP : Aspect of programming
+	
+	@Aspect : to get the AOP things are beign used
+	
+	@BeforeAdvice:
+		before request hitting target object we have the custom code run before target runs
+		Use cases:
+			-logging ,security or transactions.
+			-Audit logging
+			-API manager
+		
+		
+			
+		
+
+
+NOTES : Can use "*" to expose all endpoints
+		Can use "," to expose one by one endpoints with endpoint name
+			
+			
+		
+
+For making code of block Async we can use:
+		CompletableFuture<String> future = CompletableFuture.supplyAsync(() -> {code block});
+		Future.get() --> To get result.
+		
+		
+My my own knowledge
+
+1.Controller -> Accesing data using entity manager
+2.Controller -> DAO(data access layer) -> Accesing data
+3.Controller -> service -> DAO -> Accesing data
