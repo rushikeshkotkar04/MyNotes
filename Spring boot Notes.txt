@@ -11,8 +11,7 @@ Spring Boot
 			3.src/main/resources.application.properties-->
 				-whatever we want to add in project we have to give it value how it works
 				-like connections,servers whetever
-		
-	
+			
 		Annotations:
 			
 			-It says that following code has the work which is mentioned as annotation
@@ -132,7 +131,7 @@ Spring Boot
 				@Async:
 						to perform async task on something
 						
-				@ExceptionHandle:
+				@ExceptionHandle(ExceptionName/Custom Exception):
 						To handle exceptions
 					
 				@ControllerAdvice:
@@ -143,7 +142,9 @@ Spring Boot
 				@Schedule(crons="sec min hour DD MM day"):
 						To schedule the jobs 
 				
-				@Resilience4J 
+				@Resilience4J : for circuit break
+				
+				@DynamicPropertySource: To give values dynamically
 						
 						
 				
@@ -171,6 +172,22 @@ Spring Boot
 			-It secures all Rest API endpoints automatically by using username and password
 			-It generates the password and give us but also we can add our own password in application.properties
 			-We can exclude the endpoint by allowing the security by , seperated endpoint names from application.properties
+			-SecurityFilterChain is used for that HttpSecurity http configurer.
+			
+			    @Bean
+				public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+					http.authorizeHttpRequests(configurer->
+							configurer
+									.requestMatchers(HttpMethod.GET,"/employees/").hasRole("EMPLOYEE")
+									.requestMatchers(HttpMethod.GET,"/employees/{id}").hasRole("ADMIN")
+							);
+					//using basic Authentication
+					http.httpBasic(Customizer.withDefaults());
+					//disable CSRF
+					//Not required for POST,DELETE,PUT,PATCH ...
+					http.csrf(csrf->csrf.disable());
+					return http.build();
+				}
 			
 		
 		Inversion of control (IOC):
@@ -181,7 +198,7 @@ Spring Boot
 			-@Autowired --> Annotation is required for archeiving same
 			
 		Dependancy Injections:
-			-When a class is dependandant upon another class,This scenario is called as dependacy injections
+			-When a class is dependandant upon another class,In this scenario we need dependancy to inject in it.
 			-In spring boot it is done by the IOC container by 
 		
 		Types of Injections:
@@ -239,7 +256,7 @@ Spring Boot
 		Beans Scope:
 			
 			-By default the scope of bean is singleton
-				-Means only one instace of bean is created
+				-Means only one instance of bean is created
 				-Stores in cached memory
 				-All dependacy injections for a bean will refer same bean
 			
@@ -250,7 +267,7 @@ Spring Boot
 				1.Singleton   -> only one bean will be created
 				2.Prototype   -> New bean will be created for every injection
 				3.Request     -> Scoped to an HTTP Web request (only for web apps)
-				4.Session     -> Scoped to an HTTP Web request (only for web apps)
+				4.Session     -> Scoped to an HTTP Session (only for web apps)
 				5.Application -> Scoped at web app ServletContext (only for web apps)
 				5.WebSocket   -> Scoped at web socket (only for web apps)
 		
@@ -324,12 +341,28 @@ Terminologies:
 				
 				Relationships:
 				-one to one
-					---> one table joins one table
-					-->Cascade Types:
+					---> One table joins one table
+					---> Cascade Types:
 						-if
 				-one to many---> one table joins to many tables
 				-many to one
 				-many to many
+
+Logging:
+	logback.xml(not compulsn)
+	we have to create logback.xml in resources to custumize the logs
+	
+	TRACE
+	DEBUG
+	INFO
+	WARN
+	ERROR
+	
+	we use @Slf4J
+	
+	we use Logger instance for the same
+	
+	private Logger logger= LoggerFactory.getLogger(StudentManagmentService.class);
 				
 For advance mapping we have to map it accordingly:
 	if one table is joining abnother we have to make type of that table inside the table 
@@ -347,6 +380,11 @@ Optional<Class>:
 GlobalExceptionHandler:
 		Real time AOP it is controller advice
 		So default exceptions come to the Controller advice and we make logic on that
+		We have to create custome Exception handler classess for this
+			
+			1.Make a custom exception and send msg to super
+			2.Add custom exception in global exception
+			3.Throw the Custom exception where-ever needed by creating new object of custom exception
 
 mostly we work we objcets so each row is like object and we perform operation on that 
 				
@@ -443,9 +481,12 @@ Spring Security:
 		for Inmemory we can use InmemoryUserDeatils class
 		
 		for restriction access we can use requesrMatcher:
-			requestMatcher(Method,URL).hasRole("Given_Role")
-			requestMatcher(Method,URL).hasAnyRole("List_Of_Roles")
-			the authenticated user is handle by Spring boot it self
+		
+			HttpSecurity http
+			
+				requestMatcher(Method,URL).hasRole("Given_Role")
+				requestMatcher(Method,URL).hasAnyRole("List_Of_Roles")
+				the authenticated user is handle by Spring boot it self
 			
 		
 			For this we have to use SecurityFilterChain class to do it
@@ -474,7 +515,6 @@ Spring Security:
 			We just have to use JdbcUserDetailsManager()
 		
 		
-		
 		if we use custome table for this we have to write JDBC code for that then
 		
 
@@ -484,6 +524,11 @@ Join fetch:
 		Join + Fetch
 		
 
+REST TEMPLATE:
+	Configure it then use 
+	exchange()
+	
+	return restTemplate.exchange(url, HttpMethod.GET,null{RequestEntity}, Object.class{ResponseType});
 
 AOP : Aspect of programming
 	
@@ -495,11 +540,7 @@ AOP : Aspect of programming
 			-logging ,security or transactions.
 			-Audit logging
 			-API manager
-		
-		
-			
-		
-
+	
 
 NOTES : Can use "*" to expose all endpoints
 		Can use "," to expose one by one endpoints with endpoint name
