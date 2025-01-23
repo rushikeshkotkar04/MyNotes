@@ -1,0 +1,115 @@
+React
+	Commands to run react project
+		
+	
+		cd first-react-app
+		npm install
+		npm run dev
+		
+		Components:
+			componets with .jsx extention
+				Functional
+				Class
+			
+			use the coponent in the project:
+				<component_name></component_name>
+				export is imp
+			
+			Dynamic component:
+				in html code inside {} we can give variable value or can call function
+				
+			Fragments:
+				return function return only one tag in React
+				so if we want to return whole Html we have to enclosed
+				in <div></div>
+				
+				so for this we can use <React.Fragment><<React.Fragment>
+				or <></>
+			
+			Map method:
+				to iterate list of elements
+			
+			Conditional rendering:
+				based on condition
+				{condition && HTML Tag} --> if first is true second will work
+				{condition ? HTML TAG : HTML TAG}
+			
+			Props:
+				pass data to the components in a component
+				
+				for passing we have to pass inside atribute
+				
+				<component arg={arg} />
+				for accessing in component
+					
+					variable in fun argunment.passedvarname
+				function abc(prop){
+					return (
+						<h1>{props.args}</h1>
+					)
+				}
+				
+			Passing childers:
+				Passing elements into containers
+				it is used in container
+				passing text inside html tag
+			
+			Passing function as a props:
+				it can be done by emit events
+				
+			
+			Handling events:
+				Virtual Dom
+				it used CamelCasing
+			
+			
+			CSS module:
+				it makes css file name localize so that name conflicts wont happen
+				naming convention should be componentName.filename.css
+				
+			Bootstrap:
+				install it 
+				import it
+			
+		
+		
+		
+	React Hooks:
+	ReactFunctions which anme starts with use called as hook
+	It only used inside component
+
+		1. useState:-->
+			-To save the state of the data which chanhes over
+			-If completly rendering then it stores the state of components so it wont affect things and fast process things
+			-It return array has 2 elements current state value and setting value
+			-it cant save value permenent
+		
+		
+		2.userRef:-->
+			-It access to DOM element and retains mutable values without re-render
+			-TO work with direct referranceof the value
+			-Can be passed as props
+		
+		3.useContext:
+				To use cintext API
+		4.useReducer:
+			Alternate of useState takes function and initial value
+			It handles side effect
+			It gives function
+			Has 2 arguments
+			1.function  2 Array
+		
+		5.useEffect:
+				-To deal with the side effects in react like fetching from API and all
+				
+			
+			
+		
+		
+Context API
+	
+		A centralized Api to avoid prop drilling
+		-It holds the state can be used in the across the component and its childs
+	
+
+.fetch()--> to call Api

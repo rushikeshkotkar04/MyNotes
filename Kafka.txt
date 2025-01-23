@@ -1,0 +1,86 @@
+Kafka :
+	
+	Kafka Cluater:
+		-A group of kafka broker
+	
+	Kafka Broker:
+		-A server a kafka is running
+	
+	Kafka Producer:
+		-Produce data and put into cluster
+	
+	Kafka Consumer:
+		-Use data put by producer
+	
+	Zookeeper:
+		-Keeps track of kafka cluster health
+		-Manages kafka cluster
+	
+	Kafka Kconnect:
+		-To get data from external services or vice versa e.g. DB
+		 without any logical code
+		 source --> cluster
+		 cluster --> sink
+	
+	Kafka Stream:
+		-Functionalities to use in data transformation
+		 Takes data  from cluster do some changes on data and again 
+		 put inside the kafka cluster
+	Topic :
+		Similar to table in DB 
+		
+		producer put data in topics and consumer takes that.
+		
+		Simmilar event data store
+	
+	Partition:
+		It is inside kafka topics
+		
+		To archieve distrubuted system
+		
+		Parts of topics
+		
+		Round Robin fashion
+		
+		actual data of topics present here
+		
+		ordered and immutable
+	
+	Partitioner:
+		if key in send data it decided where to append it based on hashing and key
+		
+		
+	Sending data in kafka topic Partition
+		Key:Value
+		partition:Value
+		
+		key is optional
+		 with key ordered
+		 without key order wont be maintained
+	
+		
+		
+	Consumer Offset:
+		-Position of consumer in a partition means which msg i is  reading so they wont read msg again aagain
+	
+	Consumer Groups:
+		-Group od consumer
+		-Partitions are assigned in round robin fashion
+	
+	Segments:
+		-Set of msg in partition
+	
+	Commit Log:
+		-Actually msg store in file system called commit log
+		-Msg deleted after log file reached to particular size
+	
+	Replication factor:
+		To replicate/make copies Topics the no of Replication factor
+
+producer -> cluster -> consumer
+
+
+kafka zookeeper --> Broker --> Topic create with partition --> Producer ---> Consumer 
+
+
+

@@ -1,0 +1,339 @@
+						LIST
+Array List:
+	--size(),get(),set(),sort(),contains(),clear()
+
+Linked List:
+	--size(),get(),set(),sort(),contains(),clear(),first(),last();
+	--Same as Linkedlist but its is doubly one
+
+Vector:
+	--Same as Array list but it is synchronized
+	--size(),get(),set(),sort(),isEmpty(),contains(),clear()
+	
+
+Stack:
+	-syncronized (can use LinkedList instead of stack)
+	-push(),peek(),pop(),capacity()
+	
+
+
+						MAPS
+
+HashMap:- 
+		--put(),get(),remove(),containsKey(),containsValue(),getOrDefault(),putIfAbsent(),firstKey(),lastKey(); //O(1)
+		-key:value pair
+		-ordered get changed
+		-not synchronized
+
+LinkedHashmap:-
+		-it maintains the ordered	
+		-put(),get(),remove(),containsKey(),containsValue(),getOrDefault(),putIfAbsent() //O(1)
+		-doubly linkedlist
+		-we can change the order for inserting also
+		-it works on LRU cache
+
+WeakHashMap:
+		-After work the un used and non strong refer get cleared automatically
+
+identityHashMap:
+		-it works on objects hashcode
+		-it only works for objects
+
+SortedMap:
+		-It is inteface and TreeMap is its implementation
+
+TreeMap:
+		-It stores key:values as sorted by keys
+		-it takes comparator
+		put(),get(),remove(),containsKey(),containsValue(),getOrDefault(),putIfAbsent(),firstKey(),lastKey(),
+		headMap(),tailMap()
+
+NavigableMap:
+		-It is inteface and TreeMap is its implementation
+		-it provides navigation
+
+ConcurrentHashMap:
+		-it archeive concurrency
+		-it has own locking when resize or collision
+		-for read no locking unless write operation is going on
+		-compare and swap values
+
+ConcurrentSkipListMap:
+			thread safe TreeMap
+			Based on SkipList
+			-Concurrent map+ sorted by keys
+			-for multithreaded environment
+
+ENumMap:
+			-if keys are from enum the you can use it
+
+ImmutableMap:
+			-content cant be changed(CRUD)
+			
+
+Set:
+		add(),get(),remove(),containsKey(),containsValue(),getOrDefault(),putIfAbsent()
+		-no duplicate elements
+		-find insert tc is O(1)
+	
+TreeSet:
+		Sorted set has 
+		add() remove() first() last() contains
+
+SynchornizedMap
+		--To make whole map/set synchronized
+
+Queue:
+		Implemented by Linkedlist
+		add(),remove(),size(),poll()
+		
+
+PriorityQueue:
+		-sorted queue in order	
+		-can use comparator
+		-By default min heap
+		add(),isEmpty(),size(),
+
+Deque:
+		insertion and deletion by both end
+		ArrayDeque()
+
+BlockingQueue:
+		-Thread safe queue / wait for queue to make space or wait to get into it
+		put(),take(),offer()
+		
+
+
+
+HashTable:
+		-it implements maps
+		-synchronized
+		-legacy class
+		-replaced by concurrenthashmap	
+
+
+
+-----------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------
+
+Iterable : Interface
+			Has Functionality of forEach loop
+			it has methods
+			.hasNext(),
+			.remove(),
+			.next(),
+
+Iterator:
+		-To traverse any collections
+		Syntax 
+		Iterator<Integer>=list.iterator();
+		.hasNext(),
+		.remove(),
+		.next(),
+
+ListIterator:
+		We can replace current element also
+		
+	
+Functional interface:
+		A interface where only one abstract method present
+		Lambda experssion is on eof them
+		
+		interface MathOpeartions {
+			int operation(int a, int b);
+		}
+
+lambda expression:
+		An Anonymous function 
+		()->{logic}
+		-We have to write a interface if not present;
+		for this we need a functional interface with only one method
+			
+		interface MathOpeartions {
+			int operation(int a, int b);
+		}
+		
+		use of lambda expression:
+			
+			@FunctionalInterface
+			interface MathOpeartions {
+				int operation(int a, int b);
+			}
+			
+			MathOpeartions add = (a, b) -> {
+				return a + b;
+			};
+			System.out.println(add.operation(1, 2));
+			
+		
+predicates:
+		To check anything
+		functional interface
+		A interface has only function with return type boolean
+		and yakes only one parameter
+		
+		Syntax:
+			Predicate<Integer> isEven = (x) -> {
+				return x % 2 == 0;
+			};
+			predicate1.test(anotherFunctionalinterfaceREsults) --> To test things
+		
+		we can use and or 
+			predicate1.and(predicate2)
+			predicate1.or(predicate2)
+
+Functions:
+		A functional Interface which return anything and take parameters too
+		
+		Syntax:
+			Function<Integer, Integer> doubleIt = (x) -> x * 2;
+			Function<Integer, Integer> tripleIt = (x) -> x * 3;
+			doubleIt.apply(2);
+			doubleIt.andThen(tripleIt).apply(2);
+			doubleIt.compose(tripleIt).apply(2);// firest appli inside () then before .
+			System.out.println(doubleIt.andThen(tripleIt).apply(2));
+		
+		Give same output;
+		        Function<Integer,Integer> identity=Function.identity();
+
+Consumer:
+		-It returns void and takes input
+		-Mostly used for printing someyhing
+		Syntax:
+			Consumer<Integer> print = (a) -> System.out.println(a);
+			Consumer<Integer> print1 = (a) -> System.out.println(a);
+			print.accept(5);
+			print.andThen(print1);// first consumer then other too
+Supplier:
+		It doent take any parameter but return anything
+		Syntax:
+			Supplier<Integer> supply = () -> 1;
+			System.out.println(supply.get());
+
+// It also has BiPredicate, BiConsumer,BiFunction it takes two parameter	
+// UnaryOperator --> Same as function just take only one type
+
+Method referrance:
+		Can use method without invoking we use it instead of lambda expression
+		:: --> Method referrance
+		system.out::println
+		
+		className::new --> Constructor Refferrance
+Streams:
+		Can process any collections to stream in a functional and declarative method
+		Simplify the data processing
+		Embrace Functional Programming
+		Without multithreading we can use parallism
+		
+		source -> operations and then terminal operation
+		
+		how to create Stream:
+			1. collections.stream()
+			2. Arrays.stream(arrName)
+			3. Stream.of(values)
+			4. Stream.generate(Supplier<T>) --> infinite Stream
+			5. Stream.iterate(seed:(Starting point),UnaryOperator<T>)
+		
+		Intermeddiate operatorations: Convert Stream into other Stream
+			.filter(Predicate<T>) --> To filter based on contion
+			.map(Function<T>)     --> To give input and retrun Output
+			.sorted({comparator}) --> To get stream sorted
+			.distinct()           --> To get all unique element in stream
+			.limit(n)             --> To limit the element in the Stream
+			.skip(n)              --> To skip first n elemnets
+			
+			
+		Terminal operation:
+			Untill we dont use terminal operation intermediate operations
+			.collect(Collectors.tocollection())
+			.forEach(Consumer<T>);
+			.reduce(BiFunction)    --> combine to give single result
+			.count()
+			.anyMatch(Predicate<T>)
+			.allMatch(Predicate<T>)
+			.noneMatch(Predicate<T>)
+			.findFirst() --> to get first
+			.findAny()  --> Get Any element
+			
+Garbage collection:
+		To make memory by removing the garbage after we make variable null
+
+WeakReference<TYPE> var=new WeakReference(new object);-- we do not need to make null GC directly clear it
+
+
+
+	
+	
+
+
+MultiThreading:
+		multiple process can run at a time
+		import java.lang.*;
+		you can extend thread class or else extend runnable interface
+		
+		start(),join(),setPriority(),setDeman(),sleep(),
+		Runnable,Terminated,Sleeping,blocked....
+		
+
+Synchronization:
+		if any single thread is used by many resources at a time,
+		it might affet the final outcome so we use it so at one time only one 
+		thread can access shared resourse s
+		
+Types of it
+	intrensic:
+		no control over
+		until one colmplte others cant enter
+		synchronized: method,block of code
+	
+	explicit (locks):
+		controlled
+		we can give specific type for particular time
+		reentrantLock() most imp 
+			
+OOPS:
+
+
+
+Core Java:
+		
+File I/O:
+
+Exception hadling:
+
+
+Projects
+
+Streams:
+	-We can process collections in functional and declarative patterns
+	-Simplifies data processing(looping conditions)
+	-How to use streams source -> operation -> Terminal operation
+	
+	
+
+Callable--> when we want ro return something from lambda,it doent throw exception
+Runnable--> we do not want to return anything from lambda,it throws exception
+
+Future<?> --> it holds the value of the lambda function which will give us in future
+
+transient--> Not to allow the the serialization in java
+
+Volatile Keyword:
+		-To make variable not to cached in the memory for reasons so it wont cached the things and read directly from main memory
+		
+		-It wont work in the complex things
+		
+		-Just work for state saving
+
+Atomic Keyword:
+		-To make all opearations isolated
+		-Without using locks we can use AtomivInteger 
+	
+
+deepti_negi@BMC.com

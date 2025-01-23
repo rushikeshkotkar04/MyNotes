@@ -1,0 +1,78 @@
+What is Git:
+	A fundamental thing to track changes in there source code
+	
+
+.git --> a folder consist all info about git
+
+.gitignore -->
+		If do not want to commit soemthing we can use .gitignore
+		it is in root repository
+		It doent track changes
+		
+		we have to give file name or directory path
+
+if conflicts happens:
+	we can change or solve manually
+
+	
+commands
+	
+	1.git status
+	
+	2.git init --> To initialize a git in a folder
+	
+	3.git add <file_path> --> To put snapshot/file into staging area we specify files which want to commit
+	
+	6. git rm --cached<file> --> To unstage the snapshot/file
+	
+	4.git commit -m "MSG" --> A check point like we were her we can get back to this
+			msg should be good
+			it generates hash
+		-am it adds to staging area and commit with msg
+	
+	5.git log ----> It tells the history of all commits 
+	
+	6.git branch --> To Check all branches 
+	
+	7.git branch <branchName> --> To create new branch 
+		options :
+			-d <branch name> --> to delete the branch (has to go in diffent branch cant delete from inside same)
+			-D <branch Name> --> forceFully delete the branch (has to go in diffent branch cant delete from inside same)
+			-m <RenamedBranchName>
+	
+	8.git switch <branchName --> to go in the branch with given name
+		options :
+			- -> to go the last branch we came from
+			-c <branchName> -> it creates branch and we go inside it also
+			
+			
+	9.git checkout <BranchName> --> to switch into branch, also descard changes(before adding to staging area)
+		options:
+			-b <branchName> -> Creates branch
+			. -> all files discarded
+	
+	10.git checkout <hashcode of commit> --> TO go to the commit to review the snapshot before that commit
+	
+	11. git commit --amend -m "msg" --> to edit prevoius edits also 
+	
+	12. git merge <branchName which want to merge insde current branch>
+	
+	13.git diff  --> shows difference between current and last commit 
+	
+	14.git stash --> if we do not  want to get cahnges in diffent branch while switching when i didnt add changes to staging area so we stash it so it stored in temporary location
+	
+	15.git stash pop --> to get back the stash files/changes
+	
+	16.git stash apply --> to get back last change back
+	
+	17.git stash drop --> to delete the last stash
+	
+	18.git stash clear --> to delete the all stash
+	
+	19.git stash -- <filename> --> to add just some files to stash
+	
+	20. git restore <file name> --> to discard changes in working directory
+	
+	21 git restore --stages <file name> --> if added to staging area it get back to the 
+	
+	22. git rebase --> when we want lastest changes in out branch and we want to get into our master without commit changes on master
