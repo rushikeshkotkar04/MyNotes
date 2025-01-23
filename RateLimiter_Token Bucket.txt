@@ -1,0 +1,79 @@
+package com.employeeManagment.employeeManagment.rateLimiting;
+
+import java.time.Duration;
+import java.time.LocalTime;
+import java.util.Date;
+
+// bucket []
+
+public class TokenBucket {
+
+    private long capacity;
+    private LocalTime last;
+    private long perMinAdd;
+    private long currToken;
+    private int reFillTime;
+
+    public TokenBucket(long capacity, LocalTime last, long perMinAdd,int reFillTime) {
+        this.capacity = capacity;
+        this.last = last;
+        this.perMinAdd = perMinAdd;
+        this.currToken=capacity;
+        this.reFillTime=reFillTime;
+    }
+
+    public synchronized boolean assignToken(){
+        LocalTime time=LocalTime.now();
+        Duration duration=Duration.between(time,this.last);
+        long minBetween=duration.getSeconds()/60;
+        if (minBetween>=this.reFillTime){
+            this.currToken=Math.min(this.capacity,this.currToken+perMinAdd);
+            this.last=time;
+        }
+        if(this.currToken>0){
+            this.currToken-=1;
+            return true;
+        }
+        return false;
+    }
+
+    public long getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(long capacity) {
+        this.capacity = capacity;
+    }
+
+    public LocalTime getLast() {
+        return last;
+    }
+
+    public void setLast(LocalTime last) {
+        this.last = last;
+    }
+
+    public long getPerMinAdd() {
+        return perMinAdd;
+    }
+
+    public void setPerMinAdd(long perMinAdd) {
+        this.perMinAdd = perMinAdd;
+    }
+
+    public long getCurrToken() {
+        return currToken;
+    }
+
+    public void setCurrToken(long currToken) {
+        this.currToken = currToken;
+    }
+
+    public int getReFillTime() {
+        return reFillTime;
+    }
+
+    public void setReFillTime(int reFillTime) {
+        this.reFillTime = reFillTime;
+    }
+}
